@@ -29,15 +29,17 @@ class Stream_Analyzer:
         n_frequency_bins    = 51,
         visualize = True,
         verbose   = False,
-        height    = 600,#450,
+        height    = 800,#450,
         window_ratio = 24/9):
+
 
         self.n_frequency_bins = n_frequency_bins
         self.rate = rate
         self.verbose = verbose
         self.visualize = visualize
         self.height = height
-        self.window_ratio = window_ratio
+        self.window_ratio = window_ratio * 1.6
+        print(self.window_ratio)
 
         try:
             from src.stream_reader_pyaudio import Stream_Reader
@@ -165,7 +167,7 @@ class Stream_Analyzer:
             self.stream_reader.new_data = False
 
             self.frequency_bin_energies = np.nan_to_num(self.frequency_bin_energies, copy=True)
-            print(self.frequency_bin_energies   )
+            # print(self.frequency_bin_energies)
             if self.apply_frequency_smoothing:
                 if self.filter_width > 3:
                     self.frequency_bin_energies = savgol_filter(self.frequency_bin_energies, self.filter_width, 3)
