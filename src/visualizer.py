@@ -82,8 +82,11 @@ class Spectrum_Visualizer:
         self.screen.fill((self.bg_color,self.bg_color,self.bg_color))
 
         if self.plot_audio_history:
-            self.screen.set_alpha(255)
-            self.prev_screen = self.screen
+            self.prev_screen = self.screen.copy().convert_alpha()
+            self.prev_screen = pygame.transform.rotate(self.prev_screen, 180)
+            self.prev_screen.set_alpha(self.prev_screen.get_alpha() * self.alpha_multiplier)
+            # self.screen.set_alpha(255)
+            # self.prev_screen = self.screen
 
         pygame.display.set_caption('Spectrum Analyzer -- (FFT-Peak: %05d Hz)' %self.ear.strongest_frequency)
         self.bin_font = pygame.font.Font('freesansbold.ttf', round(0.025*self.HEIGHT))
@@ -208,9 +211,12 @@ class Spectrum_Visualizer:
                 pygame.draw.rect(self.screen,self.fast_bar_colors[i],fast_bar,0)
 
         if self.plot_audio_history:
-                self.prev_screen = self.screen.copy()
-                self.prev_screen = pygame.transform.rotate(self.prev_screen, 180)
-                self.prev_screen.set_alpha(self.prev_screen.get_alpha()*self.alpha_multiplier)
+            self.prev_screen = self.screen.copy().convert_alpha()
+            self.prev_screen = pygame.transform.rotate(self.prev_screen, 180)
+            self.prev_screen.set_alpha(self.prev_screen.get_alpha() * self.alpha_multiplier)
+                # self.prev_screen = self.screen.copy()
+                # self.prev_screen = pygame.transform.rotate(self.prev_screen, 180)
+                # self.prev_screen.set_alpha(self.prev_screen.get_alpha()*self.alpha_multiplier)
 
         if self.add_slow_bars:
             for i, slow_bar in enumerate(self.slow_bars):

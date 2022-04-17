@@ -29,7 +29,7 @@ class Stream_Analyzer:
         n_frequency_bins    = 51,
         visualize = True,
         verbose   = False,
-        height    = 450,
+        height    = 600,#450,
         window_ratio = 24/9):
 
         self.n_frequency_bins = n_frequency_bins
@@ -165,6 +165,7 @@ class Stream_Analyzer:
             self.stream_reader.new_data = False
 
             self.frequency_bin_energies = np.nan_to_num(self.frequency_bin_energies, copy=True)
+            print(self.frequency_bin_energies   )
             if self.apply_frequency_smoothing:
                 if self.filter_width > 3:
                     self.frequency_bin_energies = savgol_filter(self.frequency_bin_energies, self.filter_width, 3)
